@@ -23,19 +23,23 @@ A single-state screenshot is provided in the repository.
 
 ## Scripts How-to's
 
-To run the app, git clone onto a machine with Nodejs installed.
+To run the app:
 
-### `npm start`
+ `git clone` onto a machine with Nodejs installed.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Run `npm install`.
+
+Run `npm start`
+
+This will run the app in your default browser in development mode.<br>
+Otherwise, open [http://localhost:3000](http://localhost:3000) in your preferd browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
 ### `npm run build`
 
-Currently fails with an non-descriptive error.
+Currently fails with a non-descriptive error.
 
 #### Assignment issues:
 - Icon artifacts provided do not match the test_design comps
