@@ -24,12 +24,7 @@ function xferQueue(state, action) {
             return queue;
         case 'XFER_XFER':
             user.balance = +(user.balance -= state.data.amount).toFixed(2);
-            queue = { ...state };
-            queue.data = {...queue.data, ...user};
-            queue.phase = null;
-            let x = state.transHistory;
-            console.log(x);
-            return queue;
+            return queueInit();
         case 'XFER_CLEAR':
             return queueInit();
         default:
