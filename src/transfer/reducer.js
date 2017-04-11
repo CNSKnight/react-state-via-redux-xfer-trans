@@ -1,0 +1,40 @@
+const user = {
+    fromLabel: 'Free Checking(4692) - Available ',
+    toAcct: '',
+    amount: null,
+    balance: 5824.76
+}
+
+const queueInit = () => ({ data: { ...user }, phase: null });
+
+// Transfer Form Reducer
+// - could also have been component-specific local state
+// - but then we're getting persistent form state accross reloads
+function xferQueue(state, action) {
+    let queue;
+    switch (action.type) {
+        case 'XFER_QUEUE':
+            queue = { ...state };
+            queue.data[action.data.name] = action.data.value;
+            queue.phase = queue.data.toAcct || queue.data.amount ? 'editing' : null;
+            return queue;
+        case 'XFER_SUBMIT':
+            queue = { ...state };
+            queue.phase = 'submit';
+            return queue;
+        case 'XFER_XFER':
+            user.balance = +(user.balance -= state.data.amount).toFixed(2);
+            queue = { ...state };
+            queue.data = {...queue.data, ...user};
+            queue.phase = null;
+            let x = state.transHistory;
+            console.log(x);
+            return queue;
+        case 'XFER_CLEAR':
+            return queueInit();
+        default:
+            return state ? state : queueInit(); // cannot return undefined
+    }
+}
+
+export default xferQueue;
