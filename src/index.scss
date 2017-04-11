@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     color: #373737;
+    background-color: #FFF;
 }
 
 body,
@@ -18,7 +19,7 @@ button {
 header {
     border-bottom: 4px solid #ff844b;
     .appLogo {
-        content: url(./assets/logo.jpg);
+        // supported only Chrome content: url(./assets/logo.jpg);
         height: 50px;
         padding: 1em 0;
     }
