@@ -2,16 +2,16 @@ import initData from '../data/transactions.json';
 
 // describe our store
 const transInit = {
-    transactions: initData.data || [],
+    transactions: initData.data || []
 };
 
 // Transaction History Reducer
-function transHistory(state, action) {
+function transHistory(state = transInit, action) {
     let trans;
     switch (action.type) {
         case 'TRANS_CANCEL':
         case 'TRANS_LISTALL':
-            return (state.length && state) || transInit;
+            return state;
         case 'TRANS_SELECT':
             // tbc
             break;
@@ -26,7 +26,7 @@ function transHistory(state, action) {
             });
             return { transactions: trans }
         default:
-            return state || transInit; // must always return initial state
+            return state;
     }
 }
 
