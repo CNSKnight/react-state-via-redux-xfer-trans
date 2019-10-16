@@ -1,35 +1,35 @@
-import React from 'react';
-import { combineReducers } from 'redux';
+import React from "react";
+import { combineReducers } from "redux";
 
-import XferForm from './transfer/XferForm';
-import xferQueue from './transfer/reducer';
-import TransHistory from './transactionsHistory/TransHistory';
-import transHistory from './transactionsHistory/reducer';
+import { ConnectedXferForm, xferQueueReducer } from "./transfer";
+import {
+  ConnectedTransHistory,
+  transHistoryReducer
+} from "./transactionsHistory";
 
-// import './App.css';
+const appReducers = combineReducers({ xferQueueReducer, transHistoryReducer });
 
-const appReducers = combineReducers({ xferQueue, transHistory })
-
-const logo = 'logo.jpg';
-
-const App = props => {
+const App = () => {
   return (
     <div className="App">
       <header>
         <div className="container">
-          <i className="icon"></i>
-          <img className="appLogo" src={logo} alt="Peachtree Bank" />
+          <span className="logo">
+            <span className="flipH">B</span>
+            <span>T</span>
+            <span>B</span>
+          </span>
+          <span className="banner">Big Town Bank</span>
         </div>
       </header>
       <main>
         <div className="container">
-          <XferForm />
-          <TransHistory />
+          <ConnectedXferForm />
+          <ConnectedTransHistory />
         </div>
       </main>
     </div>
   );
 };
 
-export { appReducers };
-export default App;
+export { App as default, appReducers };

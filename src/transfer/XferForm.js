@@ -1,32 +1,32 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { isFinite, toNumber } from 'lodash';
+import React from "react";
+import { connect } from "react-redux";
+import { isFinite, toNumber } from "lodash";
 
 const FieldGroup = ({ id, label, ...props }) => {
   return (
-    <div className={"pbInputBloc " + props.className || ''}>
+    <div className={"pbInputBloc " + props.className || ""}>
       <label>{label}</label>
       <input {...props} />
     </div>
   );
-}
+};
 
-const Prompt = (props) => {
-  return props.phase === 'submit' ? <div className="previewPrompt">PREVIEW</div> : null;
-}
+const Prompt = props => {
+  return props.phase === "submit" ? (
+    <div className="previewPrompt">PREVIEW</div>
+  ) : null;
+};
 
-const XferForm = (props) => {
-  let data = props.xferQueue.data;
-  let phase = props.xferQueue.phase;
-  let canSubmit = !!(data.toAcct && data.amount);
-  let action = phase === 'submit' ? props.onXferConfirm : props.onXferSubmit;
+const XferForm = ({ xferQueue: { data, phase }, ...props }) => {
+  const canSubmit = !!(data.toAcct && data.amount);
+  const action = phase === "submit" ? props.onXferConfirm : props.onXferSubmit;
   return (
     <div className="card xfer">
       <div className="card-header">
         <i className="icon arrows"></i>
         Make a Transfer
       </div>
-      <div className={'card-content ' + phase}>
+      <div className={"card-content " + phase}>
         <Prompt phase={phase}></Prompt>
         <form>
           <FieldGroup
@@ -34,7 +34,11 @@ const XferForm = (props) => {
             label="From Account"
             type="text"
             disabled="disabled"
-            value={data.fromLabel + '$' + (data.balance ? data.balance.toFixed(2) : '0.00')}
+            value={
+              data.fromLabel +
+              "$" +
+              (data.balance ? data.balance.toFixed(2) : "0.00")
+            }
             name="fromAcct"
           />
           <FieldGroup
@@ -45,8 +49,11 @@ const XferForm = (props) => {
             value={data.toAcct || ""}
             name="toAcct"
             onChange={e => {
-              e.preventDefault()
-              props.onXferValueChange({ name: 'toAcct', value: e.target.value })
+              e.preventDefault();
+              props.onXferValueChange({
+                name: "toAcct",
+                value: e.target.value
+              });
             }}
           />
           <FieldGroup
@@ -61,54 +68,65 @@ const XferForm = (props) => {
               e.preventDefault();
               // enusure numberable
               if (isFinite(toNumber(e.target.value))) {
-                let dp = e.target.value.split('').reverse().indexOf('.');
+                const dp = e.target.value
+                  .split("")
+                  .reverse()
+                  .indexOf(".");
                 // constrain the precision
                 if (dp < 3) {
-                  props.onXferValueChange({ name: 'amount', value: e.target.value });
+                  props.onXferValueChange({
+                    name: "amount",
+                    value: e.target.value
+                  });
                 }
               }
             }}
           />
           <div className="actions">
-            <button className="btn" name="action" type="SUBMIT" disabled={!canSubmit}
+            <button
+              className="btn"
+              name="action"
+              type="SUBMIT"
+              disabled={!canSubmit}
               onClick={e => {
                 e.preventDefault();
-                action({toAcct: data.toAcct, amount: data.amount});
-              }}>{phase === 'submit' ? 'TRANSFER' : 'SUBMIT'}</button>
+                action({ toAcct: data.toAcct, amount: data.amount });
+              }}
+            >
+              {phase === "submit" ? "TRANSFER" : "SUBMIT"}
+            </button>
           </div>
         </form>
       </div>
     </div>
   );
-}
-
-XferForm.propTypes = {
-
 };
 
-const mapStateToProps = (state) => ({
-  xferQueue: state.xferQueue
+XferForm.propTypes = {};
+
+const mapStateToProps = state => ({
+  xferQueue: state.xferQueueReducer
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onXferValueChange: (data) => {
+const mapDispatchToProps = dispatch => ({
+  onXferValueChange: data => {
     dispatch({
-      type: 'XFER_QUEUE',
+      type: "XFER_QUEUE",
       data: data
     });
   },
   onXferSubmit: () => {
     dispatch({
-      type: 'XFER_SUBMIT'
+      type: "XFER_SUBMIT"
     });
   },
-  onXferConfirm: (data) => {
+  onXferConfirm: data => {
     dispatch({
-      type: 'TRANS_ADD',
+      type: "TRANS_ADD",
       data: data
     });
     dispatch({
-      type: 'XFER_XFER'
+      type: "XFER_XFER"
     });
   }
 });

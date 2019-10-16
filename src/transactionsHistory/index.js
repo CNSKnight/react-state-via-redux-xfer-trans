@@ -1,3 +1,2 @@
-import transactions from './transactions';
-
-export default transactions;
+export { default as ConnectedTransHistory } from "./TransHistory";
+export { default as transHistoryReducer } from "./reducer";

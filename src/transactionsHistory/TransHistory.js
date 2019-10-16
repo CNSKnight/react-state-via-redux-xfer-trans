@@ -5,7 +5,7 @@ import dateFormat from 'dateformat';
 const shortDate = val => {
     if (!val) return;
 
-    let d = new Date(val);
+    const d = new Date(val);
     if (!isNaN(d.valueOf())) {
         return dateFormat(d, 'mmm. d');
     }
@@ -22,7 +22,7 @@ const shortDate = val => {
 
 // return a transaction history listing
 const TransItem = props => {
-    let item = props.item;
+    const item = props.item;
     return (
         <li className="transItem" data-idx={props.idx}>
             <span className="tCatCode" style={{ backgroundColor: item.categoryCode }}></span>
@@ -49,7 +49,7 @@ const TransHistory = (props) => {
                 item={item}
                 idx={idx.toString()}
                 key={idx.toString()}
-                onTransactionsSelect={props.onTransSelect} />;
+                onTransItemSelect={props.onTransSelect} />;
         }, props);
     }
 
@@ -71,7 +71,7 @@ TransHistory.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    transHistory: state.transHistory.transactions
+    transHistory: state.transHistoryReducer.transactions
 });
 
 const mapDispatchToProps = dispatch => ({
