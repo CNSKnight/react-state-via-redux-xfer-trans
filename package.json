@@ -1,5 +1,5 @@
 {
-  "name": "react-redux-xfer-trans",
+  "name": "react-state-via-redux-xfer-trans",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
